@@ -1,6 +1,5 @@
 package com.edi.im.server.test;
 
-import com.edi.im.client.IMClientApplication;
 import com.edi.im.client.service.RouteRequest;
 import com.edi.im.client.vo.req.LoginReqVO;
 import com.edi.im.client.vo.res.CIMServerResVO;

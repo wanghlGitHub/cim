@@ -1,6 +1,5 @@
 package com.edi.im.client.service.impl;
 
-import com.edi.im.client.IMClientApplication;
 import com.edi.im.client.service.MsgLogger;
 import org.junit.Test;
 import org.junit.runner.RunWith;

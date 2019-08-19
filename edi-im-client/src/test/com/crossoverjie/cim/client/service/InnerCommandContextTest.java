@@ -1,6 +1,5 @@
 package com.edi.im.client.service;
 
-import com.edi.im.client.IMClientApplication;
 import com.edi.im.common.enums.SystemCommandEnum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
