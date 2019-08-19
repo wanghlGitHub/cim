@@ -5,11 +5,9 @@ import com.edi.im.client.service.MsgLogger;
 import com.edi.im.client.util.SpringBeanFactory;
 
 /**
- * Function:自定义收到消息回调
- *
- * @author crossoverJie
- *         Date: 2019/1/6 17:49
- * @since JDK 1.8
+ * 自定义收到消息的回调函数
+ * @author: <a href="568227120@qq.com">heliang.wang</a>
+ * @date:   2019-08-19 0019 16:58
  */
 public class MsgCallBackListener implements CustomMsgHandleListener {
 

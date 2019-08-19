@@ -72,10 +72,8 @@ public class IMClient {
 
         //登录 + 获取可以使用的服务器 ip+port
         IMServerResVO.ServerInfo cimServer = userLogin();
-
         //启动客户端
         startClient(cimServer);
-
         //向服务端注册
         loginIMServer();
 
@@ -92,8 +90,7 @@ public class IMClient {
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(group)
                 .channel(NioSocketChannel.class)
-                .handler(new IMClientHandleInitializer())
-        ;
+                .handler(new IMClientHandleInitializer());
 
         ChannelFuture future = null;
         try {
@@ -143,7 +140,11 @@ public class IMClient {
     }
 
     /**
-     * 向服务器注册
+     * <p>方法名称: loginIMServer | 描述: 向服务器注册</p>
+     * @param
+     * @return void
+     * @author: <a href="568227120@qq.com">heliang.wang</a>
+     * @date:   2019-08-19 0019 16:46
      */
     private void loginIMServer() {
         IMRequestProto.IMReqProtocol login = IMRequestProto.IMReqProtocol.newBuilder()

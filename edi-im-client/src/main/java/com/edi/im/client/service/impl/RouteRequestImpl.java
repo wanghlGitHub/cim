@@ -139,7 +139,6 @@ public class RouteRequestImpl implements RouteRequest {
                 LOGGER.error(appConfiguration.getUserName() + ":" + IMServerResVO.getMessage());
                 System.exit(-1);
             }
-
         }finally {
             body.close();
         }

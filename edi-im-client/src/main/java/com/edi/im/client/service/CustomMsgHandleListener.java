@@ -1,11 +1,9 @@
 package com.edi.im.client.service;
 
 /**
- * Function: 自定义消息回调
- *
- * @author crossoverJie
- *         Date: 2018/12/26 17:24
- * @since JDK 1.8
+ * 自定义收到消息的回调函数
+ * @author: <a href="568227120@qq.com">heliang.wang</a>
+ * @date:   2019-08-19 0019 16:58
  */
 public interface CustomMsgHandleListener {
 

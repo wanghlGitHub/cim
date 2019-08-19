@@ -101,7 +101,7 @@ public class AsyncMsgLogger implements MsgLogger {
         if (started) {
             return;
         }
-
+        //守护线程
         worker.setDaemon(true);
         worker.setName("AsyncMsgLogger-Worker");
         started = true;

@@ -1,11 +1,9 @@
 package com.edi.im.client.service;
 
 /**
- * Function:
- *
- * @author crossoverJie
- *         Date: 2019/1/6 15:23
- * @since JDK 1.8
+ * 通信消息相关，聊天记录等
+ * @author: <a href="568227120@qq.com">heliang.wang</a>
+ * @date:   2019-08-19 001916:43
  */
 public interface MsgLogger {
 
