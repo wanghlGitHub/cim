@@ -9,13 +9,13 @@ import java.io.Serializable;
  *         Date: 2018/12/23 00:43
  * @since JDK 1.8
  */
-public class CIMServerResVO implements Serializable {
+public class IMServerResVO implements Serializable {
 
     private String ip ;
     private Integer cimServerPort;
     private Integer httpPort;
 
-    public CIMServerResVO(String ip, Integer cimServerPort, Integer httpPort) {
+    public IMServerResVO(String ip, Integer cimServerPort, Integer httpPort) {
         this.ip = ip;
         this.cimServerPort = cimServerPort;
         this.httpPort = httpPort;

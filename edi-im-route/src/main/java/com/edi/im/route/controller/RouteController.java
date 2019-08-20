@@ -13,7 +13,7 @@ import com.edi.im.route.vo.req.ChatReqVO;
 import com.edi.im.route.vo.req.LoginReqVO;
 import com.edi.im.route.vo.req.P2PReqVO;
 import com.edi.im.route.vo.req.RegisterInfoReqVO;
-import com.edi.im.route.vo.res.CIMServerResVO;
+import com.edi.im.route.vo.res.IMServerResVO;
 import com.edi.im.route.vo.res.RegisterInfoResVO;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -61,7 +61,7 @@ public class RouteController {
      */
     @ApiOperation("注册账号")
     @PostMapping("registerAccount")
-    public BaseResponse<RegisterInfoResVO> registerAccount(RegisterInfoReqVO registerInfoReqVO) throws Exception {
+    public BaseResponse<RegisterInfoResVO> registerAccount(@RequestBody RegisterInfoReqVO registerInfoReqVO) throws Exception {
         BaseResponse<RegisterInfoResVO> res = new BaseResponse();
 
         long userId = System.currentTimeMillis();
@@ -78,14 +78,14 @@ public class RouteController {
      * <p>方法名称: login | 描述: 登录服务器</p>
      *
      * @param loginReqVO
-     * @return com.edi.im.common.res.BaseResponse<com.edi.im.route.vo.res.CIMServerResVO>
+     * @return com.edi.im.common.res.BaseResponse<com.edi.im.route.vo.res.IMServerResVO>
      * @author: heliang.wang
      * @date: 2019-08-19 0019 14:45
      */
     @ApiOperation("登录并获取服务器")
     @PostMapping("login")
-    public BaseResponse<CIMServerResVO> login(@RequestBody LoginReqVO loginReqVO) throws Exception {
-        BaseResponse<CIMServerResVO> res = new BaseResponse();
+    public BaseResponse<IMServerResVO> login(@RequestBody LoginReqVO loginReqVO) throws Exception {
+        BaseResponse<IMServerResVO> res = new BaseResponse();
 
         //登录校验
         StatusEnum status = accountService.login(loginReqVO);
@@ -93,7 +93,7 @@ public class RouteController {
 
             String server = routeHandle.routeServer(serverCache.getAll(), String.valueOf(loginReqVO.getUserId()));
             String[] serverInfo = server.split(":");
-            CIMServerResVO vo = new CIMServerResVO(serverInfo[0], Integer.parseInt(serverInfo[1]), Integer.parseInt(serverInfo[2]));
+            IMServerResVO vo = new IMServerResVO(serverInfo[0], Integer.parseInt(serverInfo[1]), Integer.parseInt(serverInfo[2]));
 
             //保存路由信息
             accountService.saveRouteInfo(loginReqVO, server);
@@ -121,10 +121,10 @@ public class RouteController {
         BaseResponse<NULLBody> res = new BaseResponse();
         LOGGER.info("msg=[{}]", groupReqVO.toString());
         //获取所有的推送列表
-        Map<Long, CIMServerResVO> serverResVOMap = accountService.loadRouteRelated();
-        for (Map.Entry<Long, CIMServerResVO> cimServerResVOEntry : serverResVOMap.entrySet()) {
+        Map<Long, IMServerResVO> serverResVOMap = accountService.loadRouteRelated();
+        for (Map.Entry<Long, IMServerResVO> cimServerResVOEntry : serverResVOMap.entrySet()) {
             Long userId = cimServerResVOEntry.getKey();
-            CIMServerResVO value = cimServerResVOEntry.getValue();
+            IMServerResVO value = cimServerResVOEntry.getValue();
             if (userId.equals(groupReqVO.getUserId())) {
                 //过滤掉自己
                 IMUserInfo IMUserInfo = userInfoCacheService.loadUserInfoByUserId(groupReqVO.getUserId());
@@ -159,9 +159,9 @@ public class RouteController {
 
         try {
             //获取接收消息用户的路由信息
-            CIMServerResVO cimServerResVO = accountService.loadRouteRelatedByUserId(p2pRequest.getReceiveUserId());
+            IMServerResVO IMServerResVO = accountService.loadRouteRelatedByUserId(p2pRequest.getReceiveUserId());
             //推送消息
-            String url = "http://" + cimServerResVO.getIp() + ":" + cimServerResVO.getHttpPort() + "/sendMsg";
+            String url = "http://" + IMServerResVO.getIp() + ":" + IMServerResVO.getHttpPort() + "/sendMsg";
 
             //p2pRequest.getReceiveUserId()==>消息接收者的 userID
             ChatReqVO chatVO = new ChatReqVO(p2pRequest.getReceiveUserId(), p2pRequest.getMsg());

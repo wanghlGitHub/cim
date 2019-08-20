@@ -3,7 +3,7 @@ package com.edi.im.route.service;
 import com.edi.im.common.enums.StatusEnum;
 import com.edi.im.route.vo.req.ChatReqVO;
 import com.edi.im.route.vo.req.LoginReqVO;
-import com.edi.im.route.vo.res.CIMServerResVO;
+import com.edi.im.route.vo.res.IMServerResVO;
 import com.edi.im.route.vo.res.RegisterInfoResVO;
 
 import java.util.Map;
@@ -45,14 +45,14 @@ public interface AccountService {
      * 加载所有用户的路有关系
      * @return 所有的路由关系
      */
-    Map<Long,CIMServerResVO> loadRouteRelated() ;
+    Map<Long, IMServerResVO> loadRouteRelated() ;
 
     /**
      * 获取某个用户的路有关系
      * @param userId
      * @return 获取某个用户的路有关系
      */
-    CIMServerResVO loadRouteRelatedByUserId(Long userId) ;
+    IMServerResVO loadRouteRelatedByUserId(Long userId) ;
 
 
     /**

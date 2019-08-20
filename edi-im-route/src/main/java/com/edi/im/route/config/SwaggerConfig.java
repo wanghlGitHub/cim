@@ -12,10 +12,13 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-
+/**
+ * 使用swagger 管理在线restful api 文档
+ * @author: <a href="568227120@qq.com">heliang.wang</a>
+ * @date:   2019-08-19 0019 14:00
+ */
 @Configuration
 @EnableSwagger2
-/** 是否打开swagger **/
 @ConditionalOnExpression("'${swagger.enable}' == 'true'")
 public class SwaggerConfig {
 

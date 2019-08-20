@@ -8,7 +8,7 @@ import com.edi.im.route.service.AccountService;
 import com.edi.im.route.service.UserInfoCacheService;
 import com.edi.im.route.vo.req.ChatReqVO;
 import com.edi.im.route.vo.req.LoginReqVO;
-import com.edi.im.route.vo.res.CIMServerResVO;
+import com.edi.im.route.vo.res.IMServerResVO;
 import com.edi.im.route.vo.res.RegisterInfoResVO;
 import okhttp3.*;
 import org.slf4j.Logger;
@@ -99,9 +99,9 @@ public class AccountServiceRedisImpl implements AccountService {
     }
 
     @Override
-    public Map<Long, CIMServerResVO> loadRouteRelated() {
+    public Map<Long, IMServerResVO> loadRouteRelated() {
 
-        Map<Long, CIMServerResVO> routes = new HashMap<>(64);
+        Map<Long, IMServerResVO> routes = new HashMap<>(64);
 
 
         RedisConnection connection = redisTemplate.getConnectionFactory().getConnection();
@@ -127,7 +127,7 @@ public class AccountServiceRedisImpl implements AccountService {
     }
 
     @Override
-    public CIMServerResVO loadRouteRelatedByUserId(Long userId) {
+    public IMServerResVO loadRouteRelatedByUserId(Long userId) {
         String value = redisTemplate.opsForValue().get(ROUTE_PREFIX + userId);
 
         if (value == null) {
@@ -135,16 +135,16 @@ public class AccountServiceRedisImpl implements AccountService {
         }
 
         String[] server = value.split(":");
-        CIMServerResVO cimServerResVO = new CIMServerResVO(server[0], Integer.parseInt(server[1]), Integer.parseInt(server[2]));
-        return cimServerResVO;
+        IMServerResVO IMServerResVO = new IMServerResVO(server[0], Integer.parseInt(server[1]), Integer.parseInt(server[2]));
+        return IMServerResVO;
     }
 
-    private void parseServerInfo(Map<Long, CIMServerResVO> routes, String key) {
+    private void parseServerInfo(Map<Long, IMServerResVO> routes, String key) {
         long userId = Long.valueOf(key.split(":")[1]);
         String value = redisTemplate.opsForValue().get(key);
         String[] server = value.split(":");
-        CIMServerResVO cimServerResVO = new CIMServerResVO(server[0], Integer.parseInt(server[1]), Integer.parseInt(server[2]));
-        routes.put(userId, cimServerResVO);
+        IMServerResVO IMServerResVO = new IMServerResVO(server[0], Integer.parseInt(server[1]), Integer.parseInt(server[2]));
+        routes.put(userId, IMServerResVO);
     }
 
 

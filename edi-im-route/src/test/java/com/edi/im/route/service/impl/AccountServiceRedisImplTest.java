@@ -3,7 +3,7 @@ package com.edi.im.route.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.edi.im.route.RouteApplication;
 import com.edi.im.route.service.AccountService;
-import com.edi.im.route.vo.res.CIMServerResVO;
+import com.edi.im.route.vo.res.IMServerResVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class AccountServiceRedisImplTest {
     public void loadRouteRelated() throws Exception {
         for (int i = 0; i < 100; i++) {
 
-            Map<Long, CIMServerResVO> longCIMServerResVOMap = accountService.loadRouteRelated();
+            Map<Long, IMServerResVO> longCIMServerResVOMap = accountService.loadRouteRelated();
             LOGGER.info("longCIMServerResVOMap={},cun={}" , JSON.toJSONString(longCIMServerResVOMap),i);
         }
         TimeUnit.SECONDS.sleep(10);
