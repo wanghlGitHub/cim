@@ -85,6 +85,7 @@ public class IMServer {
         NioSocketChannel socketChannel = SessionSocketHolder.get(sendMsgReqVO.getUserId());
 
         if (null == socketChannel) {
+            //TODO 用户不在线时，需转换为离线消息，将消息保存到数据库，当用户再次上线时，向服务器拉取对应的离线消息
             throw new NullPointerException("客户端[" + sendMsgReqVO.getUserId() + "]不在线！");
         }
         IMRequestProto.IMReqProtocol protocol = IMRequestProto.IMReqProtocol.newBuilder()

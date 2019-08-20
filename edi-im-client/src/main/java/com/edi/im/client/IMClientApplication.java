@@ -22,6 +22,8 @@ public class IMClientApplication implements CommandLineRunner{
 	public static void main(String[] args) {
         SpringApplication.run(IMClientApplication.class, args);
 		LOGGER.info("启动 Client 服务成功");
+		LOGGER.info("=====开始获取离线消息======");
+		//TODO 用户登录成功后刷新离线消息
 	}
 
 	@Override

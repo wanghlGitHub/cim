@@ -78,5 +78,15 @@ public class ClientInfo {
         public void setStartDate(Date startDate) {
             this.startDate = startDate;
         }
+
+        @Override
+        public String toString() {
+            return "Info{" +
+                    "userName='" + userName + '\'' +
+                    ", userId=" + userId +
+                    ", serviceInfo='" + serviceInfo + '\'' +
+                    ", startDate=" + startDate +
+                    '}';
+        }
     }
 }
