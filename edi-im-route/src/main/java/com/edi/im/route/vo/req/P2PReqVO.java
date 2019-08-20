@@ -27,7 +27,7 @@ public class P2PReqVO extends BaseRequest {
 
 
     @NotNull(message = "msg 不能为空")
-    @ApiModelProperty(required = true, value = "msg", example = "hello")
+    @ApiModelProperty(required = true, value = "要发送的消息", example = "hello")
     private String msg ;
 
     public P2PReqVO() {

@@ -15,7 +15,6 @@ import com.edi.im.route.vo.req.P2PReqVO;
 import com.edi.im.route.vo.req.RegisterInfoReqVO;
 import com.edi.im.route.vo.res.IMServerResVO;
 import com.edi.im.route.vo.res.RegisterInfoResVO;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,7 +151,6 @@ public class RouteController {
      * @date: 2019-08-19 0019 14:47
      */
     @ApiOperation("私聊 API")
-    @ApiImplicitParam(name = "p2pRequest", value = "私聊实体类", required = true, dataType = "P2PReqVO")
     @PostMapping("p2pRoute")
     public BaseResponse<NULLBody> p2pRoute(@RequestBody P2PReqVO p2pRequest) throws Exception {
         BaseResponse<NULLBody> res = new BaseResponse();

@@ -15,12 +15,12 @@ import javax.validation.constraints.NotNull;
 public class ChatReqVO extends BaseRequest {
 
     @NotNull(message = "userId 不能为空")
-    @ApiModelProperty(required = true, value = "userId", example = "1545574049323")
+    @ApiModelProperty(required = true, value = "发送人的id", example = "1545574049323")
     private Long userId ;
 
 
     @NotNull(message = "msg 不能为空")
-    @ApiModelProperty(required = true, value = "msg", example = "hello")
+    @ApiModelProperty(required = true, value = "发送的具体消息", example = "hello")
     private String msg ;
 
     public ChatReqVO() {
