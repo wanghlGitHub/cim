@@ -89,7 +89,7 @@ public class IMServer {
      * 发送 Google Protocol 编码消息
      * @param sendMsgReqVO 消息
      */
-    public void sendMsg(SendMsgReqVO sendMsgReqVO){
+    public boolean sendMsg(SendMsgReqVO sendMsgReqVO){
         NioSocketChannel socketChannel = SessionSocketHolder.get(sendMsgReqVO.getReceiveUserId());
 
         if (null == socketChannel) {
@@ -98,10 +98,8 @@ public class IMServer {
             Map<String,String> msg = new HashMap<>(1);
             msg.put(sendMsgReqVO.getUserId() + "",sendMsgReqVO.getMsg());
             redisUtil.set(key,msg);
-//            redisTemplate.opsForValue().set(key,msg);
-            LOGGER.info("客户端[" + sendMsgReqVO.getReceiveUserId() + "]不在线！");
-//            throw new NullPointerException("客户端[" + sendMsgReqVO.getUserId() + "]不在线！");
-            return;
+            LOGGER.info("客户端[" + sendMsgReqVO.getReceiveUserId() + "]不在线！已写入离线消息。");
+            return false;
         }
         IMRequestProto.IMReqProtocol protocol = IMRequestProto.IMReqProtocol.newBuilder()
                 .setRequestId(sendMsgReqVO.getUserId())
@@ -112,5 +110,6 @@ public class IMServer {
         ChannelFuture future = socketChannel.writeAndFlush(protocol);
         future.addListener((ChannelFutureListener) channelFuture ->
                 LOGGER.info("服务端手动发送 Google Protocol 成功={}", sendMsgReqVO.toString()));
+        return true;
     }
 }

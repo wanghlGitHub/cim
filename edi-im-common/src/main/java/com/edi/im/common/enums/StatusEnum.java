@@ -45,7 +45,11 @@ public enum StatusEnum {
      * 请求限流
      */
     REQUEST_LIMIT("6000", "请求限流"),
-    ;
+
+    /**
+     * 离线消息
+     */
+    OFFLINE_MSG("9001", "离线消息");
 
 
     /**

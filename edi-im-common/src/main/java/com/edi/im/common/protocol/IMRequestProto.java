@@ -5,6 +5,7 @@ package com.edi.im.common.protocol;
 
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.ExtensionRegistryLite;
+import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.MessageOrBuilder;
 
 public final class IMRequestProto {
@@ -60,12 +61,9 @@ public final class IMRequestProto {
     /**
      * Protobuf type {@code protocol.CIMReqProtocol}
      */
-    public static final class IMReqProtocol extends
-            com.google.protobuf.GeneratedMessageV3 implements
-            IMReqProtocolOrBuilder {
+    public static final class IMReqProtocol extends GeneratedMessageV3 implements IMReqProtocolOrBuilder {
         private static final long serialVersionUID = 0L;
 
-        // Use CIMReqProtocol.newBuilder() to construct.
         private IMReqProtocol(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
             super(builder);
         }
@@ -77,8 +75,7 @@ public final class IMRequestProto {
         }
 
         @Override
-        public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
+        public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
             return this.unknownFields;
         }
 

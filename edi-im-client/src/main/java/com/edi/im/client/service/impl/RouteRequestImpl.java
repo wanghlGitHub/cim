@@ -25,7 +25,7 @@ import java.util.List;
  * Function:
  *
  * @author crossoverJie
- *         Date: 2018/12/22 22:27
+ * Date: 2018/12/22 22:27
  * @since JDK 1.8
  */
 @Service
@@ -34,7 +34,7 @@ public class RouteRequestImpl implements RouteRequest {
     private final static Logger LOGGER = LoggerFactory.getLogger(RouteRequestImpl.class);
 
     @Autowired
-    private OkHttpClient okHttpClient ;
+    private OkHttpClient okHttpClient;
 
     private MediaType mediaType = MediaType.parse("application/json");
 
@@ -51,29 +51,28 @@ public class RouteRequestImpl implements RouteRequest {
     private String onlineUserUrl;
 
 
-
     @Autowired
-    private AppConfiguration appConfiguration ;
+    private AppConfiguration appConfiguration;
 
     @Override
     public void sendGroupMsg(GroupReqVO groupReqVO) throws Exception {
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("msg",groupReqVO.getMsg());
-        jsonObject.put("userId",groupReqVO.getUserId());
-        RequestBody requestBody = RequestBody.create(mediaType,jsonObject.toString());
+        jsonObject.put("msg", groupReqVO.getMsg());
+        jsonObject.put("userId", groupReqVO.getUserId());
+        RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
 
         Request request = new Request.Builder()
                 .url(groupRouteRequestUrl)
                 .post(requestBody)
                 .build();
 
-        Response response = okHttpClient.newCall(request).execute() ;
+        Response response = okHttpClient.newCall(request).execute();
         try {
-            if (!response.isSuccessful()){
+            if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }
-        }finally {
+        } finally {
             response.body().close();
         }
     }
@@ -81,32 +80,32 @@ public class RouteRequestImpl implements RouteRequest {
     @Override
     public void sendP2PMsg(P2PReqVO p2PReqVO) throws Exception {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("msg",p2PReqVO.getMsg());
-        jsonObject.put("userId",p2PReqVO.getUserId());
-        jsonObject.put("receiveUserId",p2PReqVO.getReceiveUserId());
-        RequestBody requestBody = RequestBody.create(mediaType,jsonObject.toString());
+        jsonObject.put("msg", p2PReqVO.getMsg());
+        jsonObject.put("userId", p2PReqVO.getUserId());
+        jsonObject.put("receiveUserId", p2PReqVO.getReceiveUserId());
+        RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
 
         Request request = new Request.Builder()
                 .url(p2pRouteRequestUrl)
                 .post(requestBody)
                 .build();
 
-        Response response = okHttpClient.newCall(request).execute() ;
-        if (!response.isSuccessful()){
+        Response response = okHttpClient.newCall(request).execute();
+        if (!response.isSuccessful()) {
             throw new IOException("Unexpected code " + response);
         }
 
         ResponseBody body = response.body();
         try {
-            String json = body.string() ;
+            String json = body.string();
             BaseResponse baseResponse = JSON.parseObject(json, BaseResponse.class);
 
             //选择的账号不存在
-            if (baseResponse.getCode().equals(StatusEnum.OFF_LINE.getCode())){
+            if (baseResponse.getCode().equals(StatusEnum.OFF_LINE.getCode())) {
                 LOGGER.error(p2PReqVO.getReceiveUserId() + ":" + StatusEnum.OFF_LINE.getMessage());
             }
 
-        }finally {
+        } finally {
             body.close();
         }
     }
@@ -115,17 +114,17 @@ public class RouteRequestImpl implements RouteRequest {
     public IMServerResVO.ServerInfo getCIMServer(LoginReqVO loginReqVO) throws Exception {
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userId",loginReqVO.getUserId());
-        jsonObject.put("userName",loginReqVO.getUserName());
-        RequestBody requestBody = RequestBody.create(mediaType,jsonObject.toString());
+        jsonObject.put("userId", loginReqVO.getUserId());
+        jsonObject.put("userName", loginReqVO.getUserName());
+        RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
 
         Request request = new Request.Builder()
                 .url(serverRouteLoginUrl)
                 .post(requestBody)
                 .build();
 
-        Response response = okHttpClient.newCall(request).execute() ;
-        if (!response.isSuccessful()){
+        Response response = okHttpClient.newCall(request).execute();
+        if (!response.isSuccessful()) {
             throw new IOException("Unexpected code " + response);
         }
         IMServerResVO IMServerResVO;
@@ -135,43 +134,42 @@ public class RouteRequestImpl implements RouteRequest {
             IMServerResVO = JSON.parseObject(json, IMServerResVO.class);
 
             //重复失败
-            if (!IMServerResVO.getCode().equals(StatusEnum.SUCCESS.getCode())){
+            if (!IMServerResVO.getCode().equals(StatusEnum.SUCCESS.getCode())) {
                 LOGGER.error(appConfiguration.getUserName() + ":" + IMServerResVO.getMessage());
                 System.exit(-1);
             }
-        }finally {
+        } finally {
             body.close();
         }
-
 
 
         return IMServerResVO.getDataBody();
     }
 
     @Override
-    public List<OnlineUsersResVO.DataBodyBean> onlineUsers() throws Exception{
+    public List<OnlineUsersResVO.DataBodyBean> onlineUsers() throws Exception {
 
         JSONObject jsonObject = new JSONObject();
-        RequestBody requestBody = RequestBody.create(mediaType,jsonObject.toString());
+        RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
 
         Request request = new Request.Builder()
                 .url(onlineUserUrl)
                 .post(requestBody)
                 .build();
 
-        Response response = okHttpClient.newCall(request).execute() ;
-        if (!response.isSuccessful()){
+        Response response = okHttpClient.newCall(request).execute();
+        if (!response.isSuccessful()) {
             throw new IOException("Unexpected code " + response);
         }
 
 
         ResponseBody body = response.body();
-        OnlineUsersResVO onlineUsersResVO ;
+        OnlineUsersResVO onlineUsersResVO;
         try {
-            String json = body.string() ;
+            String json = body.string();
             onlineUsersResVO = JSON.parseObject(json, OnlineUsersResVO.class);
 
-        }finally {
+        } finally {
             body.close();
         }
 
@@ -194,7 +192,7 @@ public class RouteRequestImpl implements RouteRequest {
         try {
             response = okHttpClient.newCall(request).execute();
         } catch (IOException e) {
-            LOGGER.error("exception",e);
+            LOGGER.error("exception", e);
         } finally {
             response.body().close();
         }
