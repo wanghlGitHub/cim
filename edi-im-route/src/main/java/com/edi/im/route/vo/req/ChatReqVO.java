@@ -18,6 +18,9 @@ public class ChatReqVO extends BaseRequest {
     @ApiModelProperty(required = true, value = "发送人的id", example = "1545574049323")
     private Long userId ;
 
+    @NotNull(message = "userId 不能为空")
+    @ApiModelProperty(required = true, value = "消息接收者的 userId", example = "1545574049323")
+    private Long receiveUserId;
 
     @NotNull(message = "msg 不能为空")
     @ApiModelProperty(required = true, value = "发送的具体消息", example = "hello")
@@ -26,9 +29,18 @@ public class ChatReqVO extends BaseRequest {
     public ChatReqVO() {
     }
 
-    public ChatReqVO(Long userId, String msg) {
+    public ChatReqVO(Long userId, Long receiveUserId,String msg) {
         this.userId = userId;
         this.msg = msg;
+        this.receiveUserId = receiveUserId;
+    }
+
+    public Long getReceiveUserId() {
+        return receiveUserId;
+    }
+
+    public void setReceiveUserId(Long receiveUserId) {
+        this.receiveUserId = receiveUserId;
     }
 
     public String getMsg() {
@@ -49,9 +61,10 @@ public class ChatReqVO extends BaseRequest {
 
     @Override
     public String toString() {
-        return "GroupReqVO{" +
+        return "ChatReqVO{" +
                 "userId=" + userId +
+                ", receiveUserId=" + receiveUserId +
                 ", msg='" + msg + '\'' +
-                "} " + super.toString();
+                '}' + super.toString();
     }
 }

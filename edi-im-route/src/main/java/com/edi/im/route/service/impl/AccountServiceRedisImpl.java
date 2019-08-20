@@ -115,7 +115,6 @@ public class AccountServiceRedisImpl implements AccountService {
             String key = new String(next, StandardCharsets.UTF_8);
             LOGGER.info("key={}", key);
             parseServerInfo(routes, key);
-
         }
         try {
             scan.close();
@@ -155,6 +154,8 @@ public class AccountServiceRedisImpl implements AccountService {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg", IMUserInfo.getUserName() + ":【" + groupReqVO.getMsg() + "】");
         jsonObject.put("userId", groupReqVO.getUserId());
+        jsonObject.put("receiveUserId", groupReqVO.getReceiveUserId());
+        jsonObject.put("timeStamp", groupReqVO.getTimeStamp());
         RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
 
         Request request = new Request.Builder()

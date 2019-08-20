@@ -22,6 +22,18 @@ public class SendMsgReqVO extends BaseRequest {
     @ApiModelProperty(required = true, value = "userId", example = "11")
     private Long userId ;
 
+    @NotNull(message = "receiveUserId 不能为空")
+    @ApiModelProperty(required = true, value = "消息接收者的 userId", example = "1545574049323")
+    private Long receiveUserId ;
+
+    public Long getReceiveUserId() {
+        return receiveUserId;
+    }
+
+    public void setReceiveUserId(Long receiveUserId) {
+        this.receiveUserId = receiveUserId;
+    }
+
     public String getMsg() {
         return msg;
     }
@@ -43,6 +55,7 @@ public class SendMsgReqVO extends BaseRequest {
         return "SendMsgReqVO{" +
                 "msg='" + msg + '\'' +
                 ", userId=" + userId +
-                "} " + super.toString();
+                ", receiveUserId=" + receiveUserId +
+                '}' + super.toString();
     }
 }

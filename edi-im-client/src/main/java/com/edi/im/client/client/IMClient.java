@@ -76,8 +76,6 @@ public class IMClient {
         startClient(cimServer);
         //向服务端注册
         loginIMServer();
-
-
     }
 
     /**

@@ -3,6 +3,7 @@ package com.edi.im.server.server;
 import com.edi.im.common.constant.Constants;
 import com.edi.im.common.protocol.IMRequestProto;
 import com.edi.im.server.init.IMServerInitializer;
+import com.edi.im.server.util.RedisUtil;
 import com.edi.im.server.util.SessionSocketHolder;
 import com.edi.im.server.vo.req.SendMsgReqVO;
 import io.netty.bootstrap.ServerBootstrap;
@@ -15,12 +16,15 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Function:
@@ -33,6 +37,7 @@ import java.net.InetSocketAddress;
 public class IMServer {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(IMServer.class);
+    private static final String OFFLINE_MSG = "OFFLINE_MSG:";
 
     private EventLoopGroup boss = new NioEventLoopGroup();
     private EventLoopGroup work = new NioEventLoopGroup();
@@ -40,6 +45,9 @@ public class IMServer {
 
     @Value("${im.server.port}")
     private int nettyPort;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
 
     /**
@@ -82,11 +90,18 @@ public class IMServer {
      * @param sendMsgReqVO 消息
      */
     public void sendMsg(SendMsgReqVO sendMsgReqVO){
-        NioSocketChannel socketChannel = SessionSocketHolder.get(sendMsgReqVO.getUserId());
+        NioSocketChannel socketChannel = SessionSocketHolder.get(sendMsgReqVO.getReceiveUserId());
 
         if (null == socketChannel) {
-            //TODO 用户不在线时，需转换为离线消息，将消息保存到数据库，当用户再次上线时，向服务器拉取对应的离线消息
-            throw new NullPointerException("客户端[" + sendMsgReqVO.getUserId() + "]不在线！");
+            //用户不在线时，需转换为离线消息，将消息保存到数据库，当用户再次上线时，向服务器拉取对应的离线消息
+            String key = OFFLINE_MSG + sendMsgReqVO.getReceiveUserId();
+            Map<String,String> msg = new HashMap<>(1);
+            msg.put(sendMsgReqVO.getUserId() + "",sendMsgReqVO.getMsg());
+            redisUtil.set(key,msg);
+//            redisTemplate.opsForValue().set(key,msg);
+            LOGGER.info("客户端[" + sendMsgReqVO.getReceiveUserId() + "]不在线！");
+//            throw new NullPointerException("客户端[" + sendMsgReqVO.getUserId() + "]不在线！");
+            return;
         }
         IMRequestProto.IMReqProtocol protocol = IMRequestProto.IMReqProtocol.newBuilder()
                 .setRequestId(sendMsgReqVO.getUserId())

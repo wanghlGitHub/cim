@@ -29,8 +29,9 @@ import java.util.Set;
 
 /**
  * IM路由
+ *
  * @author: <a href="568227120@qq.com">heliang.wang</a>
- * @date:   2019-08-19 0019 14:48
+ * @date: 2019-08-19 0019 14:48
  */
 @RestController
 @RequestMapping("/")
@@ -122,9 +123,9 @@ public class RouteController {
         //获取所有的推送列表
         Map<Long, IMServerResVO> serverResVOMap = accountService.loadRouteRelated();
         for (Map.Entry<Long, IMServerResVO> cimServerResVOEntry : serverResVOMap.entrySet()) {
-            Long userId = cimServerResVOEntry.getKey();
+            Long receiveId = cimServerResVOEntry.getKey();
             IMServerResVO value = cimServerResVOEntry.getValue();
-            if (userId.equals(groupReqVO.getUserId())) {
+            if (receiveId.equals(groupReqVO.getUserId())) {
                 //过滤掉自己
                 IMUserInfo IMUserInfo = userInfoCacheService.loadUserInfoByUserId(groupReqVO.getUserId());
                 LOGGER.warn("过滤掉了发送者 userId={}", IMUserInfo.toString());
@@ -132,7 +133,7 @@ public class RouteController {
             }
             //推送消息
             String url = "http://" + value.getIp() + ":" + value.getHttpPort() + "/sendMsg";
-            ChatReqVO chatVO = new ChatReqVO(userId, groupReqVO.getMsg());
+            ChatReqVO chatVO = new ChatReqVO(groupReqVO.getUserId(), receiveId, groupReqVO.getMsg());
             accountService.pushMsg(url, groupReqVO.getUserId(), chatVO);
         }
 
@@ -162,7 +163,7 @@ public class RouteController {
             String url = "http://" + IMServerResVO.getIp() + ":" + IMServerResVO.getHttpPort() + "/sendMsg";
 
             //p2pRequest.getReceiveUserId()==>消息接收者的 userID
-            ChatReqVO chatVO = new ChatReqVO(p2pRequest.getReceiveUserId(), p2pRequest.getMsg());
+            ChatReqVO chatVO = new ChatReqVO(p2pRequest.getUserId(), p2pRequest.getReceiveUserId(), p2pRequest.getMsg());
             accountService.pushMsg(url, p2pRequest.getUserId(), chatVO);
 
             res.setCode(StatusEnum.SUCCESS.getCode());
@@ -200,10 +201,11 @@ public class RouteController {
 
     /**
      * <p>方法名称: onlineUser | 描述: 获取所有在线用户</p>
+     *
      * @param
-     * @return com.edi.im.common.res.BaseResponse<java.util.Set<com.edi.im.common.pojo.IMUserInfo>>
+     * @return com.edi.im.common.res.BaseResponse<java.util.Set   <   com.edi.im.common.pojo.IMUserInfo>>
      * @author: heliang.wang
-     * @date:   2019-08-19 0019 14:47
+     * @date: 2019-08-19 0019 14:47
      */
     @ApiOperation("获取所有在线用户")
     @PostMapping("onlineUser")
