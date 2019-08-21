@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since JDK 1.8
  */
 public class SessionSocketHolder {
+
     private static final Map<Long, NioSocketChannel> CHANNEL_MAP = new ConcurrentHashMap<>(16);
     private static final Map<Long, String> SESSION_MAP = new ConcurrentHashMap<>(16);
 

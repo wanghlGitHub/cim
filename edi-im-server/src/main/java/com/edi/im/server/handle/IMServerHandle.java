@@ -8,7 +8,9 @@ import com.edi.im.common.pojo.IMUserInfo;
 import com.edi.im.common.protocol.IMRequestProto;
 import com.edi.im.common.util.NettyAttrUtil;
 import com.edi.im.server.config.AppConfiguration;
+import com.edi.im.server.constant.Constant;
 import com.edi.im.server.kit.ServerHeartBeatHandlerImpl;
+import com.edi.im.server.util.RedisUtil;
 import com.edi.im.server.util.SessionSocketHolder;
 import com.edi.im.server.util.SpringBeanFactory;
 import io.netty.channel.ChannelFutureListener;
@@ -27,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Function:
@@ -129,6 +132,11 @@ public class IMServerHandle extends SimpleChannelInboundHandler<IMRequestProto.I
             SessionSocketHolder.put(msg.getRequestId(), (NioSocketChannel) ctx.channel());
             SessionSocketHolder.saveSession(msg.getRequestId(), msg.getReqMsg());
             LOGGER.info("客户端[{}]上线成功", msg.getReqMsg());
+            //TODO 用户上线后检查是否存在对应的离线消息，如果存在离线消息，将消息推送给用户
+            RedisUtil redisUtil = SpringBeanFactory.getBean(RedisUtil.class);
+            Map map = (Map)redisUtil.get(Constant.OFFLINE_MSG + msg.getRequestId());
+            String sendUserId = map.get("sendUserId").toString();
+            String sendMsg = map.get("sendMsg").toString();
         }
 
         //心跳更新时间

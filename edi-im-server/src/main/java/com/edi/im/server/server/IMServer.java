@@ -2,6 +2,7 @@ package com.edi.im.server.server;
 
 import com.edi.im.common.constant.Constants;
 import com.edi.im.common.protocol.IMRequestProto;
+import com.edi.im.server.constant.Constant;
 import com.edi.im.server.init.IMServerInitializer;
 import com.edi.im.server.util.RedisUtil;
 import com.edi.im.server.util.SessionSocketHolder;
@@ -37,7 +38,6 @@ import java.util.Map;
 public class IMServer {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(IMServer.class);
-    private static final String OFFLINE_MSG = "OFFLINE_MSG:";
 
     private EventLoopGroup boss = new NioEventLoopGroup();
     private EventLoopGroup work = new NioEventLoopGroup();
@@ -94,10 +94,13 @@ public class IMServer {
 
         if (null == socketChannel) {
             //用户不在线时，需转换为离线消息，将消息保存到数据库，当用户再次上线时，向服务器拉取对应的离线消息
-            String key = OFFLINE_MSG + sendMsgReqVO.getReceiveUserId();
-            Map<String,String> msg = new HashMap<>(1);
-            msg.put(sendMsgReqVO.getUserId() + "",sendMsgReqVO.getMsg());
+            String key = Constant.OFFLINE_MSG + sendMsgReqVO.getReceiveUserId();
+            Map<String,Object> msg = new HashMap<>(2);
+            msg.put("sendUserId",sendMsgReqVO.getUserId());
+            msg.put("sendMsg",sendMsgReqVO.getMsg());
             redisUtil.set(key,msg);
+            //确保消息及时性，设置过期时间60秒
+            redisUtil.expire(key,60);
             LOGGER.info("客户端[" + sendMsgReqVO.getReceiveUserId() + "]不在线！已写入离线消息。");
             return false;
         }
