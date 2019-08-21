@@ -11,6 +11,7 @@ import com.edi.im.route.service.AccountService;
 import com.edi.im.route.service.UserInfoCacheService;
 import com.edi.im.route.vo.req.ChatReqVO;
 import com.edi.im.route.vo.req.LoginReqVO;
+import com.edi.im.route.vo.req.OffLineReqVO;
 import com.edi.im.route.vo.req.P2PReqVO;
 import com.edi.im.route.vo.req.RegisterInfoReqVO;
 import com.edi.im.route.vo.res.IMServerResVO;
@@ -36,18 +37,15 @@ import java.util.Set;
 @RestController
 @RequestMapping("/")
 public class RouteController {
+
     private final static Logger LOGGER = LoggerFactory.getLogger(RouteController.class);
 
     @Autowired
     private ServerCache serverCache;
-
     @Autowired
     private AccountService accountService;
-
     @Autowired
     private UserInfoCacheService userInfoCacheService;
-
-
     @Autowired
     private RouteHandle routeHandle;
 
@@ -179,20 +177,20 @@ public class RouteController {
     /**
      * <p>方法名称: offLine | 描述: 下线</p>
      *
-     * @param groupReqVO
+     * @param offLineReqVO
      * @return com.edi.im.common.res.BaseResponse<com.edi.im.common.res.NULLBody>
      * @author: heliang.wang
      * @date: 2019-08-19 0019 14:47
      */
     @ApiOperation("客户端下线")
     @PostMapping("offLine")
-    public BaseResponse<NULLBody> offLine(@RequestBody ChatReqVO groupReqVO) throws Exception {
+    public BaseResponse<NULLBody> offLine(@RequestBody OffLineReqVO offLineReqVO) throws Exception {
         BaseResponse<NULLBody> res = new BaseResponse();
 
-        IMUserInfo IMUserInfo = userInfoCacheService.loadUserInfoByUserId(groupReqVO.getUserId());
+        IMUserInfo IMUserInfo = userInfoCacheService.loadUserInfoByUserId(offLineReqVO.getUserId());
 
         LOGGER.info("下线用户[{}]", IMUserInfo.toString());
-        accountService.offLine(groupReqVO.getUserId());
+        accountService.offLine(offLineReqVO.getUserId());
         res.setCode(StatusEnum.SUCCESS.getCode());
         res.setMessage(StatusEnum.SUCCESS.getMessage());
         return res;
@@ -218,5 +216,4 @@ public class RouteController {
         res.setMessage(StatusEnum.SUCCESS.getMessage());
         return res;
     }
-
 }

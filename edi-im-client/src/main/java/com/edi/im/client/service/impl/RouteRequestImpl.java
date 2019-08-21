@@ -2,8 +2,8 @@ package com.edi.im.client.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.edi.im.client.config.AppConfiguration;
 import com.edi.im.client.service.RouteRequest;
+import com.edi.im.client.config.AppConfiguration;
 import com.edi.im.client.vo.req.GroupReqVO;
 import com.edi.im.client.vo.req.LoginReqVO;
 import com.edi.im.client.vo.req.P2PReqVO;

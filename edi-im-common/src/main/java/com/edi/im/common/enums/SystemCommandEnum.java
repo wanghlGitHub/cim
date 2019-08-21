@@ -110,7 +110,7 @@ public enum SystemCommandEnum {
     public static Map<String, String> getAllClazz() {
         Map<String, String> map = new HashMap<String, String>(16);
         for (SystemCommandEnum status : values()) {
-            map.put(status.getCommandType().trim(), "com.edi.im.client.service.impl.command." + status.getClazz());
+            map.put(status.getCommandType().trim(), "com.edi.im.route.client.service.impl.command." + status.getClazz());
         }
         return map;
     }

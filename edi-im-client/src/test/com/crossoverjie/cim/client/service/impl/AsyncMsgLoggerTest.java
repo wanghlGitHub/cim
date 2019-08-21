@@ -1,6 +1,6 @@
-package com.edi.im.client.service.impl;
+package com.edi.im.route.client.service.impl;
 
-import com.edi.im.client.service.MsgLogger;
+import com.edi.im.route.client.service.MsgLogger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

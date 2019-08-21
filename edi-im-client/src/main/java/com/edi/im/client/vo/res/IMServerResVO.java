@@ -61,7 +61,7 @@ public class IMServerResVO implements Serializable {
          * port : 8081
          */
         private String ip ;
-        private Integer cimServerPort;
+        private Integer imServerPort;
         private Integer httpPort;
 
         public String getIp() {
@@ -72,12 +72,12 @@ public class IMServerResVO implements Serializable {
             this.ip = ip;
         }
 
-        public Integer getCimServerPort() {
-            return cimServerPort;
+        public Integer getImServerPort() {
+            return imServerPort;
         }
 
-        public void setCimServerPort(Integer cimServerPort) {
-            this.cimServerPort = cimServerPort;
+        public void setImServerPort(Integer imServerPort) {
+            this.imServerPort = imServerPort;
         }
 
         public Integer getHttpPort() {
@@ -92,7 +92,7 @@ public class IMServerResVO implements Serializable {
         public String toString() {
             return "ServerInfo{" +
                     "ip='" + ip + '\'' +
-                    ", cimServerPort=" + cimServerPort +
+                    ", imServerPort=" + imServerPort +
                     ", httpPort=" + httpPort +
                     '}';
         }

@@ -1,8 +1,8 @@
 package com.edi.im.server.test;
 
-import com.edi.im.client.service.RouteRequest;
-import com.edi.im.client.vo.req.LoginReqVO;
-import com.edi.im.client.vo.res.CIMServerResVO;
+import com.edi.im.route.client.service.RouteRequest;
+import com.edi.im.route.client.vo.req.LoginReqVO;
+import com.edi.im.route.client.vo.res.CIMServerResVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

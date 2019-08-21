@@ -1,7 +1,7 @@
 package com.edi.im.client.service.impl;
 
-import com.edi.im.client.config.AppConfiguration;
 import com.edi.im.client.service.MsgLogger;
+import com.edi.im.client.config.AppConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

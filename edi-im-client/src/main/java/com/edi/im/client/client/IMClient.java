@@ -1,13 +1,13 @@
 package com.edi.im.client.client;
 
 import com.edi.im.client.config.AppConfiguration;
-import com.edi.im.client.init.IMClientHandleInitializer;
 import com.edi.im.client.service.MsgHandle;
 import com.edi.im.client.service.RouteRequest;
 import com.edi.im.client.service.impl.ClientInfo;
 import com.edi.im.client.vo.req.GoogleProtocolVO;
 import com.edi.im.client.vo.req.LoginReqVO;
 import com.edi.im.client.vo.res.IMServerResVO;
+import com.edi.im.client.channel.IMClientHandleInitializer;
 import com.edi.im.common.constant.Constants;
 import com.edi.im.common.protocol.IMRequestProto;
 import io.netty.bootstrap.Bootstrap;
@@ -92,7 +92,7 @@ public class IMClient {
 
         ChannelFuture future = null;
         try {
-            future = bootstrap.connect(cimServer.getIp(), cimServer.getCimServerPort()).sync();
+            future = bootstrap.connect(cimServer.getIp(), cimServer.getImServerPort()).sync();
         } catch (InterruptedException e) {
             errorCount++;
 
@@ -121,7 +121,7 @@ public class IMClient {
             cimServer = routeRequest.getCIMServer(loginReqVO);
 
             //保存系统信息
-            clientInfo.saveServiceInfo(cimServer.getIp() + ":" + cimServer.getCimServerPort())
+            clientInfo.saveServiceInfo(cimServer.getIp() + ":" + cimServer.getImServerPort())
                     .saveUserInfo(userId, userName);
 
             LOGGER.info("cimServer=[{}]", cimServer.toString());

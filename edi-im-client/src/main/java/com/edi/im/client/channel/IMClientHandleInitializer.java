@@ -1,4 +1,4 @@
-package com.edi.im.client.init;
+package com.edi.im.client.channel;
 
 import com.edi.im.client.handle.IMClientHandle;
 import com.edi.im.common.protocol.IMResponseProto;

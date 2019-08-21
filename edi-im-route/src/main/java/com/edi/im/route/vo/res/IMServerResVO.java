@@ -12,12 +12,12 @@ import java.io.Serializable;
 public class IMServerResVO implements Serializable {
 
     private String ip ;
-    private Integer cimServerPort;
+    private Integer imServerPort;
     private Integer httpPort;
 
-    public IMServerResVO(String ip, Integer cimServerPort, Integer httpPort) {
+    public IMServerResVO(String ip, Integer imServerPort, Integer httpPort) {
         this.ip = ip;
-        this.cimServerPort = cimServerPort;
+        this.imServerPort = imServerPort;
         this.httpPort = httpPort;
     }
 
@@ -29,19 +29,19 @@ public class IMServerResVO implements Serializable {
         this.ip = ip;
     }
 
-    public Integer getCimServerPort() {
-        return cimServerPort;
-    }
-
-    public void setCimServerPort(Integer cimServerPort) {
-        this.cimServerPort = cimServerPort;
-    }
-
     public Integer getHttpPort() {
         return httpPort;
     }
 
     public void setHttpPort(Integer httpPort) {
         this.httpPort = httpPort;
+    }
+
+    public Integer getImServerPort() {
+        return imServerPort;
+    }
+
+    public void setImServerPort(Integer imServerPort) {
+        this.imServerPort = imServerPort;
     }
 }

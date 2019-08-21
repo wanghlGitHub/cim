@@ -1,4 +1,4 @@
-package com.edi.im.client.service;
+package com.edi.im.route.client.service;
 
 import com.edi.im.common.enums.SystemCommandEnum;
 import org.junit.Test;
